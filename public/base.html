@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{TITLE}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
   </head>
-  <header>
-    <h1>{{TITLE}}</h1>
-  </header>
-  <br />
   <body>
-    {{CONTENT}}
-  </body>
-  <br />
-  <footer>
-    <h5>Made with <a href="https://github.com/Raisess/blob" target="_blank">blob</a></h5>
-  </footer>
+    <header class="p-3 border-bottom">
+      <h1 class="ms-4">{{CONTENT_TITLE}}</h1>
+    </header>
+    <br />
+    <main class="ms-5 p-4">
+      {{CONTENT}}
+    </main>
+    <br />
+    <footer class="p-3 border-top">
+      <h5 class="ms-4">Made with <a href="https://github.com/Raisess/blob" target="_blank">blob</a></h5>
+    </footer>
+  </div>
 </html>
