@@ -6,7 +6,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
       page = "index.html" if self.path == "/" else f"posts{self.path}.html"
-      html = View("Blob", page)
+      html = View(page)
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
@@ -35,4 +35,8 @@ class Server:
   def listen(self) -> None:
     with TCPServer((self.host, self.port), RequestHandler) as instance:
       print(f"Running at http://{self.host}:{self.port}")
-      instance.serve_forever()
+
+      try:
+        instance.serve_forever()
+      except KeyboardInterrupt:
+        instance.shutdown()

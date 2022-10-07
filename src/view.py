@@ -1,9 +1,15 @@
+STATIC_PAGE_TILE = "Blob"
+
 class View:
-  def __init__(self, title: str, path: str):
-    base_html = self._find_html("base.html")
-    self._content = base_html.replace("{{TITLE}}", title)
-    html = self._find_html(path)
-    self._content = self._content.replace("{{CONTENT}}", html)
+  def __init__(self, path: str, title: str = STATIC_PAGE_TILE):
+    if path == "base.html":
+      self._content = self._find_html("base.html")
+      self._content = self._content.replace("{{TITLE}}", title)
+    else:
+      self._content = self._find_html("base.html")
+      self._content = self._content.replace("{{TITLE}}", title)
+      html = self._find_html(path)
+      self._content = self._content.replace("{{CONTENT}}", html)
 
   @property
   def content(self) -> str:
@@ -24,7 +30,7 @@ class View:
 
 class ErrorView(View):
   def __init__(self, code: int, message: str):
-    super().__init__(f"Blob Error {code}", "error.html")
+    super().__init__("base.html", f"Blob Error {code}")
 
-    self._content = self._content.replace("{{CODE}}", str(code))
-    self._content = self._content.replace("{{MESSAGE}}", message)
+    self._content = self._content.replace("{{CONTENT_TITLE}}", f"REQUEST ERROR {code}")
+    self._content = self._content.replace("{{CONTENT}}", f"<h2>{message}</h2>")
