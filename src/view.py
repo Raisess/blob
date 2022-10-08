@@ -31,10 +31,10 @@ class ListView(View):
     super().__init__()
 
     posts = os.listdir("./inputs")
-    posts_tags = []
+    posts_tags = ["<h2>Posts</h2>"]
     for post in posts:
-      page = post.split(".html")[0]
-      posts_tags.append(f"<a href=\"./posts/{post}\">{page}</a>")
+      page = post.split(".html")[0].replace("-", " ")
+      posts_tags.append(f"<h4><a href=\"./posts/{post}\">{page}</a></h4>")
 
     self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
