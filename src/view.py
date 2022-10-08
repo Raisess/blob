@@ -33,7 +33,7 @@ class ListView(View):
     posts_tags = []
     for post in posts:
       page = post.split(".html")[0]
-      posts_tags.append(f"<a href=\"{page}\">{page}</a>")
+      posts_tags.append(f"<a href=\"./posts/{post}\">{page}</a>")
 
     self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 

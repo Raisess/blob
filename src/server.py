@@ -8,7 +8,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
       if self.path == "/":
         html = ListView()
       else:
-        html = PostView(f"posts{self.path}.html")
+        html = PostView(f"./{self.path}")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
