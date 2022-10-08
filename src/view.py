@@ -1,9 +1,7 @@
 import os
 
-STATIC_TITLE = "Blob"
-
 class View:
-  def __init__(self, title: str = STATIC_TITLE):
+  def __init__(self, title: str):
     self._content = self._find_html("base.html")
     self._content = self._content.replace("{{TITLE}}", title)
 
@@ -31,10 +29,25 @@ class ListView(View):
     super().__init__(title)
 
     posts = os.listdir("./inputs")
+    posts.reverse()
     posts_tags = ["<h2>Posts</h2>"]
     for post in posts:
-      page = post.split(".html")[0].replace("-", " ")
-      posts_tags.append(f"<h4><a href=\"/blog/{post}\">{page}</a></h4>")
+      date = post.split("_")[0]
+      year = date[0:4]
+      month = date[4:6]
+      day = date[6:8]
+
+      page = post.split("_")[1].replace("-", " ").replace(".html", "")
+      posts_tags.append(f"""
+        <div>
+          <time style="color:	#888888 !important; font-size: 0.9rem !important;">
+            {year}-{month}-{day}
+          </time>
+          <h4>
+            <a href=\"/blog/{post}\">{page}</a>
+          </h4>
+        </div>
+      """)
 
     self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
