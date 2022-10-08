@@ -29,6 +29,7 @@ class ListView(View):
     super().__init__(title)
 
     posts = os.listdir("./inputs")
+    posts.sort()
     posts.reverse()
     posts_tags = ["<h2>Posts</h2>"]
     for post in posts:
