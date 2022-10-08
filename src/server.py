@@ -1,12 +1,14 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
-from view import View, ErrorView
+from view import View, ListView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
-      page = "index.html" if self.path == "/" else f"posts{self.path}.html"
-      html = View(page)
+      if self.path == "/":
+        html = ListView()
+      else:
+        html = View(f"posts{self.path}.html")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")

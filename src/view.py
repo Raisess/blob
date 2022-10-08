@@ -1,3 +1,5 @@
+import os
+
 STATIC_PAGE_TILE = "Blob"
 
 class View:
@@ -23,14 +25,26 @@ class View:
     if not path.endswith(".html"):
       raise Exception("Invalid file format")
 
-    file = open("public/" + path, "r")
+    file = open("./public/" + path, "r")
     html = file.read()
     file.close()
     return html
+
+class ListView(View):
+  def __init__(self):
+    super().__init__("base.html")
+
+    posts = os.listdir("./public/posts")
+    posts_tags = []
+    for post in posts:
+      page = post.split(".html")[0]
+      posts_tags.append(f"<a href=\"{page}\">{page}</a>")
+
+    self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
 class ErrorView(View):
   def __init__(self, code: int, message: str):
     super().__init__("base.html", f"Blob Error {code}")
 
-    self._content = self._content.replace("{{CONTENT_TITLE}}", f"REQUEST ERROR {code}")
+    self._content = self._content.replace("{{TITLE}}", f"REQUEST ERROR {code}")
     self._content = self._content.replace("{{CONTENT}}", f"<h2>{message}</h2>")
