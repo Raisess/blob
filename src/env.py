@@ -1,3 +1,5 @@
+from typing import Optional
+
 class EnvParser:
   def parse() -> dict[str]:
     file = open(".env", "r")
@@ -18,5 +20,5 @@ class Env:
   def __init__(self):
     self._data = EnvParser.parse()
 
-  def get(self, key: str) -> str:
-    return self._data[key]
+  def get(self, key: str) -> Optional[str]:
+    return self._data.get(key)

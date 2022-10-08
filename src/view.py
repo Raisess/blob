@@ -1,7 +1,9 @@
 import os
 
+STATIC_TITLE = "Blob"
+
 class View:
-  def __init__(self, title: str):
+  def __init__(self, title: str = STATIC_TITLE):
     self._content = self._find_html("base.html")
     self._content = self._content.replace("{{TITLE}}", title)
 

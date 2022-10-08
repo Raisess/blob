@@ -9,9 +9,9 @@ class RequestHandler(SimpleHTTPRequestHandler):
       env = Env()
 
       if self.path == "/":
-        html = ListView(env.get("STATIC_TILE"))
+        html = ListView(env.get("STATIC_TITLE"))
       else:
-        html = PostView(env.get("STATIC_TILE"), f"./{self.path}")
+        html = PostView(env.get("STATIC_TITLE"), f"./{self.path}")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
