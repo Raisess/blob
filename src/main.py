@@ -5,8 +5,8 @@ import sys
 from server import Server
 
 if __name__ == "__main__":
-  if not os.path.isdir("./public/posts"):
-    os.mkdir("./public/posts")
+  if not os.path.isdir("./posts"):
+    os.mkdir("./posts")
 
   if len(sys.argv) < 2 or sys.argv[1] == "serve":
     app = Server('localhost', 8000)

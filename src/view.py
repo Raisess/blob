@@ -19,10 +19,23 @@ class View:
     if not path.endswith(".html"):
       raise Exception("Invalid file format")
 
-    file = open("./public/" + path, "r")
+    file = open(path, "r")
     html = file.read()
     file.close()
     return html
+
+
+class ListView(View):
+  def __init__(self):
+    super().__init__()
+
+    posts = os.listdir("./posts")
+    posts_tags = []
+    for post in posts:
+      page = post.split(".html")[0]
+      posts_tags.append(f"<a href=\"{page}\">{page}</a>")
+
+    self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
 
 class PostView(View):
@@ -31,19 +44,6 @@ class PostView(View):
 
     html = self._find_html(path)
     self._content = self._content.replace("{{CONTENT}}", html)
-
-
-class ListView(View):
-  def __init__(self):
-    super().__init__()
-
-    posts = os.listdir("./public/posts")
-    posts_tags = []
-    for post in posts:
-      page = post.split(".html")[0]
-      posts_tags.append(f"<a href=\"{page}\">{page}</a>")
-
-    self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
 
 class ErrorView(View):
