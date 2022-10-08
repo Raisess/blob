@@ -1,4 +1,5 @@
 import os
+from env import Env
 from view import ListView, PostView
 
 class Generator:
@@ -6,8 +7,10 @@ class Generator:
     self._post = post
 
   def generate(self):
+    env = Env()
+
     if self._post == "index":
-      view = ListView()
+      view = ListView(env.get("STATIC_TITLE"))
       file = open("index.html", "w")
       file.write(view.content)
       file.close()
@@ -16,7 +19,7 @@ class Generator:
         os.mkdir("./posts")
 
       path = f"./posts/{self._post}.html"
-      view = PostView(path)
+      view = PostView(env.get("STATIC_TITLE"), path)
       file = open(path, "w")
       file.write(view.content)
       file.close()

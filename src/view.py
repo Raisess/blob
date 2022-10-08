@@ -1,9 +1,7 @@
 import os
 
-STATIC_PAGE_TILE = "Blob"
-
 class View:
-  def __init__(self, title: str = STATIC_PAGE_TILE):
+  def __init__(self, title: str):
     self._content = self._find_html("base.html")
     self._content = self._content.replace("{{TITLE}}", title)
 
@@ -27,8 +25,8 @@ class View:
 
 
 class ListView(View):
-  def __init__(self):
-    super().__init__()
+  def __init__(self, title: str):
+    super().__init__(title)
 
     posts = os.listdir("./inputs")
     posts_tags = ["<h2>Posts</h2>"]
@@ -40,8 +38,8 @@ class ListView(View):
 
 
 class PostView(View):
-  def __init__(self, path: str):
-    super().__init__()
+  def __init__(self, title: str, path: str):
+    super().__init__(title)
 
     html = self._find_html(path)
     self._content = self._content.replace("{{CONTENT}}", html)

@@ -1,14 +1,17 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
+from env import Env
 from view import ListView, PostView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
+      env = Env()
+
       if self.path == "/":
-        html = ListView()
+        html = ListView(env.get("STATIC_TILE"))
       else:
-        html = PostView(f"./{self.path}")
+        html = PostView(env.get("STATIC_TILE"), f"./{self.path}")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
