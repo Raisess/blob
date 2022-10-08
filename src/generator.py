@@ -8,17 +8,16 @@ class Generator:
 
   def generate(self):
     env = Env()
+    if not os.path.isdir("./blog"):
+      os.mkdir("./blog")
 
     if self._post == "index":
       view = ListView(env.get("STATIC_TITLE"))
-      file = open("index.html", "w")
+      file = open("./blog/index.html", "w")
       file.write(view.content)
       file.close()
     else:
-      if not os.path.isdir("./posts"):
-        os.mkdir("./posts")
-
-      path = f"./posts/{self._post}.html"
+      path = f"./blog/{self._post}.html"
       view = PostView(env.get("STATIC_TITLE"), path)
       file = open(path, "w")
       file.write(view.content)

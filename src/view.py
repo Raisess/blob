@@ -19,7 +19,7 @@ class View:
     if not path.endswith(".html"):
       raise Exception("Invalid file format")
 
-    path = path.replace("posts", "inputs")
+    path = path.replace("blog", "inputs")
     file = open(path, "r")
     html = file.read()
     file.close()
@@ -34,7 +34,7 @@ class ListView(View):
     posts_tags = ["<h2>Posts</h2>"]
     for post in posts:
       page = post.split(".html")[0].replace("-", " ")
-      posts_tags.append(f"<h4><a href=\"./posts/{post}\">{page}</a></h4>")
+      posts_tags.append(f"<h4><a href=\"/blog/{post}\">{page}</a></h4>")
 
     self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 

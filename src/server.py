@@ -8,7 +8,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
     try:
       env = Env()
 
-      if self.path == "/":
+      if self.path == "/blog":
         html = ListView(env.get("STATIC_TITLE"))
       else:
         html = PostView(env.get("STATIC_TITLE"), f"./{self.path}")

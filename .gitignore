@@ -2,6 +2,5 @@ inputs/
 __pycache__/
 
 # remove for posting
-posts/
-index.html
+blog/
 .env
