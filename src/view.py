@@ -19,6 +19,7 @@ class View:
     if not path.endswith(".html"):
       raise Exception("Invalid file format")
 
+    path = path.replace("posts", "inputs")
     file = open(path, "r")
     html = file.read()
     file.close()
@@ -29,7 +30,7 @@ class ListView(View):
   def __init__(self):
     super().__init__()
 
-    posts = os.listdir("./posts")
+    posts = os.listdir("./inputs")
     posts_tags = []
     for post in posts:
       page = post.split(".html")[0]
