@@ -3,15 +3,9 @@ import os
 STATIC_PAGE_TILE = "Blob"
 
 class View:
-  def __init__(self, path: str, title: str = STATIC_PAGE_TILE):
-    if path == "base.html":
-      self._content = self._find_html("base.html")
-      self._content = self._content.replace("{{TITLE}}", title)
-    else:
-      self._content = self._find_html("base.html")
-      self._content = self._content.replace("{{TITLE}}", title)
-      html = self._find_html(path)
-      self._content = self._content.replace("{{CONTENT}}", html)
+  def __init__(self, title: str = STATIC_PAGE_TILE):
+    self._content = self._find_html("base.html")
+    self._content = self._content.replace("{{TITLE}}", title)
 
   @property
   def content(self) -> str:
@@ -30,9 +24,18 @@ class View:
     file.close()
     return html
 
+
+class PostView(View):
+  def __init__(self, path: str):
+    super().__init__()
+
+    html = self._find_html(path)
+    self._content = self._content.replace("{{CONTENT}}", html)
+
+
 class ListView(View):
   def __init__(self):
-    super().__init__("base.html")
+    super().__init__()
 
     posts = os.listdir("./public/posts")
     posts_tags = []
@@ -42,9 +45,9 @@ class ListView(View):
 
     self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
 
+
 class ErrorView(View):
   def __init__(self, code: int, message: str):
-    super().__init__("base.html", f"Blob Error {code}")
+    super().__init__(f"REQUEST ERROR {code}")
 
-    self._content = self._content.replace("{{TITLE}}", f"REQUEST ERROR {code}")
     self._content = self._content.replace("{{CONTENT}}", f"<h2>{message}</h2>")

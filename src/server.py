@@ -1,6 +1,6 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
-from view import View, ListView, ErrorView
+from view import ListView, PostView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
@@ -8,7 +8,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
       if self.path == "/":
         html = ListView()
       else:
-        html = View(f"posts{self.path}.html")
+        html = PostView(f"posts{self.path}.html")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
@@ -28,6 +28,7 @@ class RequestHandler(SimpleHTTPRequestHandler):
       self.send_header("Content-type", "text/html")
       self.end_headers()
       self.wfile.write(html.content_bytes)
+
 
 class Server:
   def __init__(self, host: str, port: int):
