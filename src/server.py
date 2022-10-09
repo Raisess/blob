@@ -1,23 +1,21 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
-from env import Env
 from view import ListView, PostView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
-    env = Env()
     try:
       if self.path == "/blog":
-        html = ListView(env.get("STATIC_TITLE"))
+        html = ListView()
       else:
-        html = PostView(env.get("STATIC_TITLE"), f"./{self.path}")
+        html = PostView(f"./{self.path}")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")
       self.end_headers()
       self.wfile.write(html.content_bytes)
     except:
-      html = ErrorView(env.get("STATIC_TITLE"), 404, "Not Found")
+      html = ErrorView(404, "Not Found")
 
       self.send_response(404)
       self.send_header("Content-type", "text/html")
