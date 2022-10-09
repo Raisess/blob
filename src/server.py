@@ -6,7 +6,7 @@ from view import ListView, PostView, ErrorView
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
-      if self.path.startswith("/blog")
+      if self.path.startswith("/blog"):
         env = Env()
         if self.path == "/blog":
           html = ListView(env.get("STATIC_TITLE"))
