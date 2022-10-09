@@ -41,7 +41,7 @@ class ListView(View):
       page = post.split("_")[1].replace("-", " ").replace(".html", "")
       posts_tags.append(f"""
         <div>
-          <time style="color:	#888888 !important; font-size: 0.9rem !important;">
+          <time style="color: #888888 !important; font-size: 0.9rem !important;">
             {year}-{month}-{day}
           </time>
           <h4>
