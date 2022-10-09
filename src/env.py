@@ -16,6 +16,7 @@ class EnvParser:
 
     return env
 
+
 class Env:
   def __init__(self):
     self._data = EnvParser.parse()
