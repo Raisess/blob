@@ -6,17 +6,17 @@ from view import ListView, PostView, ErrorView
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
-      env = Env()
+      if self.path.startswith("/blog")
+        env = Env()
+        if self.path == "/blog":
+          html = ListView(env.get("STATIC_TITLE"))
+        else:
+          html = PostView(env.get("STATIC_TITLE"), f"./{self.path}")
 
-      if self.path == "/blog":
-        html = ListView(env.get("STATIC_TITLE"))
-      else:
-        html = PostView(env.get("STATIC_TITLE"), f"./{self.path}")
-
-      self.send_response(200)
-      self.send_header("Content-type", "text/html")
-      self.end_headers()
-      self.wfile.write(html.content_bytes)
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(html.content_bytes)
     except FileNotFoundError:
       html = ErrorView(404, "Not Found")
 
