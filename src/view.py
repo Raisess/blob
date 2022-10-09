@@ -62,7 +62,7 @@ class PostView(View):
 
 
 class ErrorView(View):
-  def __init__(self, code: int, message: str):
-    super().__init__(f"REQUEST ERROR {code}")
+  def __init__(self, title: str, code: int, message: str):
+    super().__init__(f"{title} | Error: {code}")
 
     self._content = self._content.replace("{{CONTENT}}", f"<h2>{message}</h2>")
