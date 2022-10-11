@@ -6,8 +6,8 @@ LIB=/usr/local/lib/blob
 
 sudo mkdir -p $LIB
 sudo cp ./src/**.py $LIB
-sudo mkdir -p $ETC/themes
-sudo cp ./base.html $ETC/themes
+sudo mkdir -p $ETC
+sudo cp -r themes/ $ETC
 
 echo "
 #! /usr/bin/env bash

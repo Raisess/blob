@@ -9,7 +9,7 @@ def init(project_name: str):
   if not os.path.isdir(f"./{project_name}"):
     os.mkdir(f"./{project_name}")
     file = open(f"./{project_name}/.env", "w")
-    file.write("STATIC_TITLE=Blob")
+    file.write(f"STATIC_TITLE={project_name}")
     file.close()
 
   if not os.path.isdir(f"./{project_name}/inputs"):
