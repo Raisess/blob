@@ -6,7 +6,7 @@ from datetime import datetime
 from generator import Generator
 from server import Server
 
-def init(project_name: str):
+def init(project_name: str) -> None:
   if not os.path.isdir(f"./{project_name}"):
     os.mkdir(f"./{project_name}")
     file = open(f"./{project_name}/.env", "w")
@@ -22,7 +22,7 @@ def init(project_name: str):
   print(f"\n\tcd {project_name}")
 
 
-def post(post_name: str):
+def post(post_name: str) -> None:
   if not os.path.isdir(f"./inputs"):
     os.mkdir(f"./inputs")
 

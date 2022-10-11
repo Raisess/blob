@@ -2,7 +2,7 @@ import os
 from view import ListView, PostView
 
 class Generator:
-  def Generate():
+  def Generate() -> None:
     if not os.path.isdir("./blog"):
       os.mkdir("./blog")
 
