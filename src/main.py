@@ -5,11 +5,28 @@ import sys
 from generator import Generator
 from server import Server
 
-if __name__ == "__main__":
-  if not os.path.isdir("./inputs"):
-    os.mkdir("./inputs")
+def init(project_name: str):
+  if not os.path.isdir(f"./{project_name}"):
+    os.mkdir(f"./{project_name}")
+    file = open(f"./{project_name}/.env", "w")
+    file.write("STATIC_TITLE=Blob")
+    file.close()
 
-  if len(sys.argv) < 2 or sys.argv[1] == "serve":
+  if not os.path.isdir(f"./{project_name}/inputs"):
+    os.mkdir(f"./{project_name}/inputs")
+  if not os.path.isdir(f"./{project_name}/blog"):
+    os.mkdir(f"./{project_name}/blog")
+
+  print("Blog created!")
+  print(f"\n\tcd {project_name}")
+
+
+if __name__ == "__main__":
+  if len(sys.argv) < 2:
+    raise Exception("Invalid command")
+  elif sys.argv[1] == "init":
+    init(sys.argv[2])
+  elif sys.argv[1] == "serve":
     app = Server('localhost', 8000)
     app.listen()
   elif sys.argv[1] == "generate":

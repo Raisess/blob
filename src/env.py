@@ -2,19 +2,22 @@ from typing import Optional
 
 class EnvParser:
   def parse() -> dict[str]:
-    file = open(".env", "r")
-    content = file.read()
-    file.close()
+    try:
+      file = open("./.env", "r")
+      content = file.read()
+      file.close()
 
-    lines = content.split("\n")
-    lines.pop()
+      lines = content.split("\n")
+      lines.pop()
 
-    env: dict[str] = {}
-    for line in lines:
-      (key, value) = line.split("=")
-      env[key] = value
+      env: dict[str] = {}
+      for line in lines:
+        (key, value) = line.split("=")
+        env[key] = value
 
-    return env
+      return env
+    except:
+      return {}
 
 
 class Env:

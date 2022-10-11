@@ -3,7 +3,8 @@ from env import env
 
 class View:
   def __init__(self):
-    self._content = self._find_html("base.html")
+    theme_path = os.path.abspath(f"/usr/local/etc/blob/themes/base.html")
+    self._content = self._find_html(theme_path)
     self._content = self._content.replace("{{TITLE}}", env.get("STATIC_TITLE"))
 
   @property
