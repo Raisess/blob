@@ -13,6 +13,6 @@ if __name__ == "__main__":
     app = Server('localhost', 8000)
     app.listen()
   elif sys.argv[1] == "generate":
-    Generator.generate()
+    Generator.Generate()
   else:
     raise Exception("Invalid command")

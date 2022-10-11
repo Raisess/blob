@@ -25,12 +25,12 @@ class RequestHandler(SimpleHTTPRequestHandler):
 
 class Server:
   def __init__(self, host: str, port: int):
-    self.host = host;
-    self.port = port;
+    self.host = host
+    self.port = port
 
   def listen(self) -> None:
     with TCPServer((self.host, self.port), RequestHandler) as instance:
-      print(f"Running at http://{self.host}:{self.port}")
+      print(f"Running at http://{self.host}:{self.port}/blog")
 
       try:
         instance.serve_forever()

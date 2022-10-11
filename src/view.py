@@ -1,9 +1,8 @@
 import os
-from env import Env
+from env import env
 
 class View:
   def __init__(self):
-    env = Env()
     self._content = self._find_html("base.html")
     self._content = self._content.replace("{{TITLE}}", env.get("STATIC_TITLE"))
 

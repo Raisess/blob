@@ -23,3 +23,5 @@ class Env:
 
   def get(self, key: str) -> Optional[str]:
     return self._data.get(key)
+
+env = Env()
