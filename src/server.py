@@ -5,10 +5,7 @@ from view import ListView, PostView, ErrorView
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
-      if self.path == "/blog":
-        html = ListView()
-      else:
-        html = PostView(f"./{self.path}")
+      html = ListView() if self.path == "/blog" else PostView(f"./{self.path}")
 
       self.send_response(200)
       self.send_header("Content-type", "text/html")

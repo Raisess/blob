@@ -5,7 +5,8 @@ class View:
   def __init__(self):
     theme = env.get("THEME") if env.get("THEME") != None else "default.html"
     self._content = self._find_html(os.path.abspath(f"/usr/local/etc/blob/themes/{theme}"))
-    self._content = self._content.replace("{{TITLE}}", env.get("STATIC_TITLE"))
+    self._content = self._content.replace("{{TITLE}}", env.get("TITLE"))
+    self._content = self._content.replace("{{DESCRIPTION}}", env.get("DESCRIPTION"))
 
   @property
   def content(self) -> str:
