@@ -22,4 +22,4 @@ blob serve
 ```
 
 check `http://localhost:8000/blog` in a browser, edit the generated file on the `inputs/` folder,
-commit the files to your github repository, have fun.
+execute the command `blob generate` and the commit the files to your github repository, have fun.
