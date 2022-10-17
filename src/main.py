@@ -22,18 +22,24 @@ def init(project_name: str) -> None:
   print(f"\n\tcd {project_name}")
 
 
-def post(post_name: str) -> None:
+def post(post_name: str, markdown = False) -> None:
   if not os.path.isdir(f"./inputs"):
     os.mkdir(f"./inputs")
 
   date = datetime.now().strftime("%Y%m%d")
-  file = open(f"./inputs/{date}_{post_name}.html", "w")
+  path = f"./inputs/{date}_{post_name}.html"
   post_title = post_name.replace("-", " ")
-  file.write(f"<h2>{post_title}</h2>")
+  content = f"<h2>{post_title}</h2>"
+  if markdown:
+    path = path.replace(".html", ".md")
+    content = f"## {post_title}"
+
+  file = open(path, "w")
+  file.write(content)
   file.close()
 
   print("Post created!")
-  print(f"Start editing inputs/{post_name}")
+  print(f"Start editing {path}")
 
 
 if __name__ == "__main__":
@@ -43,6 +49,8 @@ if __name__ == "__main__":
     init(sys.argv[2])
   elif sys.argv[1] == "post":
     post(sys.argv[2])
+  elif sys.argv[1] == "post-md":
+    post(sys.argv[2], True)
   elif sys.argv[1] == "serve":
     app = Server('localhost', 8000)
     app.listen()
