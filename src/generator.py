@@ -15,6 +15,6 @@ class Generator:
     for post in posts:
       path = f"./blog/{post}"
       view = PostView(path)
-      file = open(path, "w")
+      file = open(path.replace(".md", ".html"), "w")
       file.write(view.content)
       file.close()

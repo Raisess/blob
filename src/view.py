@@ -1,3 +1,4 @@
+import mistune
 import os
 from env import env
 
@@ -17,12 +18,12 @@ class View:
     return bytes(self.content, "utf8")
 
   def _find_html(self, path: str) -> str:
-    if not path.endswith(".html"):
+    if not path.endswith(".html") and not path.endswith(".md"):
       raise Exception("Invalid file format")
 
     path = path.replace("blog", "inputs")
     file = open(path, "r")
-    html = file.read()
+    html = file.read() if path.endswith(".html") else mistune.html(file.read())
     file.close()
     return html
 
@@ -41,7 +42,7 @@ class ListView(View):
       month = date[4:6]
       day = date[6:8]
 
-      page = post.split("_")[1].replace("-", " ").replace(".html", "")
+      page = post.split("_")[1].replace("-", " ").replace(".html", "").replace(".md", "")
       posts_tags.append(f"""
         <div>
           <time style="color: #888888 !important; font-size: 0.9rem !important;">
