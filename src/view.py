@@ -29,7 +29,7 @@ class View:
 
 
 class ListView(View):
-  def __init__(self):
+  def __init__(self, dev = True):
     super().__init__()
 
     posts = os.listdir("./inputs")
@@ -37,6 +37,9 @@ class ListView(View):
     posts.reverse()
     posts_tags = ["<h2>Posts</h2>"]
     for post in posts:
+      if not dev:
+        post = post.replace(".md", ".html")
+
       date = post.split("_")[0]
       year = date[0:4]
       month = date[4:6]
