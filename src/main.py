@@ -56,5 +56,12 @@ if __name__ == "__main__":
     app.listen()
   elif sys.argv[1] == "generate":
     Generator.Generate()
+  elif sys.argv[1] == "help":
+    print("init: start's a new blog")
+    print("post: create a new html post")
+    print("post-md: create a new markdown post")
+    print("serve: start's a local server to look to results at port 8000")
+    print("generate: transform the files from the input folder to upload ready blog posts on the blog folder")
+    print("\nThanks for using blob @ Raisess")
   else:
     raise Exception("Invalid command")
