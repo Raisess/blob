@@ -9,14 +9,15 @@ from server import Server
 def init(project_name: str) -> None:
   if not os.path.isdir(f"./{project_name}"):
     os.mkdir(f"./{project_name}")
-    file = open(f"./{project_name}/.env", "w")
-    file.write(f"STATIC_TITLE={project_name}\n")
-    file.close()
-
   if not os.path.isdir(f"./{project_name}/inputs"):
     os.mkdir(f"./{project_name}/inputs")
   if not os.path.isdir(f"./{project_name}/blog"):
     os.mkdir(f"./{project_name}/blog")
+
+  if not os.path.isfile(f"./{project_name}/.env"):
+    with open(f"./{project_name}/.env", "w") as file:
+      file.write(f"TITLE={project_name}\nDESCRIPTION={project_name}\n")
+      file.close()
 
   print("Blog created!")
   print(f"\n\tcd {project_name}")
