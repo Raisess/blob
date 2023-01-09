@@ -2,6 +2,11 @@
 
 A simple and small blog generator for Github Pages.
 
+## Dependencies
+
+- [Python 3.10.x >=](https://www.python.org/)
+- [yacli](https://github.com/Raisess/yacli)
+
 ## Getting started
 
 Installing:

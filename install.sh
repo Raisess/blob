@@ -1,19 +1,14 @@
 #! /usr/bin/env bash
+#
+echo "Installing blob..."
 
-BIN=/usr/local/bin/blob
-ETC=/usr/local/etc/blob
-LIB=/usr/local/lib/blob
+sudo cp ./bin/blob /usr/local/bin/blob
 
-sudo mkdir -p $LIB
-sudo cp ./src/**.py $LIB
-sudo mkdir -p $ETC
-sudo cp -r themes/ $ETC
+sudo rm -rf /usr/local/lib/blob
+sudo cp -r ./src /usr/local/lib/blob
 
-echo "
-#! /usr/bin/env bash
+sudo rm -rf /usr/local/etc/blob
+sudo mkdir -p /usr/local/etc/blob/themes
+sudo cp -r ./themes/* /usr/local/etc/blob/themes
 
-$LIB/main.py \$1 \$2
-" > cli.sh
-
-sudo chmod +x cli.sh
-sudo mv cli.sh $BIN
+echo "Installed successfully!"
