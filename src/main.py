@@ -3,8 +3,9 @@
 import os
 import sys
 from datetime import datetime
-from generator import Generator
-from server import Server
+
+from view.generator import Generator
+from server.server import Server
 
 def init(project_name: str) -> None:
   if not os.path.isdir(f"./{project_name}"):

@@ -1,5 +1,6 @@
 import os
-from view import ListView, PostView
+
+from view.view import ListView, PostView
 
 class Generator:
   def Generate() -> None:

@@ -1,6 +1,7 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
-from view import ListView, PostView, ErrorView
+
+from view.view import ListView, PostView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
