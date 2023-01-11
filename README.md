@@ -12,18 +12,19 @@ A simple and small blog generator for Github Pages.
 Installing:
 
 ```shell
-git clone https://github.com/Raisess/blob
-cd blob
-./install.sh
+$ git clone https://github.com/Raisess/blob
+$ cd blob
+$ sudo ./install.py
+$ blob help
 ```
 
 Usage:
 
 ```shell
-blob init my-blog
-cd my-blog
-blob post my-post-title
-blob serve
+$ blob init my-blog
+$ cd my-blog
+$ blob post my-post-title
+$ blob serve
 ```
 
 check `http://localhost:8000/blog` in a browser, edit the generated file on the `inputs/` folder,
