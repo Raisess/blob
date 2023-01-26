@@ -5,7 +5,7 @@ from yacli import Command
 
 class PostCommand(Command):
   def __init__(self):
-    super().__init__("post", "Create new html post.", args_len=2)
+    super().__init__("post", "Create a new post. E.g.: blob post markdown post-name", args_len=2)
     self.__valid_post_types = ["html", "markdown"]
 
   def handle(self, args: list[str]) -> None:
@@ -24,9 +24,8 @@ class PostCommand(Command):
       path = path.replace(".html", ".md")
       content = f"## {post_title}"
 
-    file = open(path, "w")
-    file.write(content)
-    file.close()
+    with open(path, "w") as file:
+      file.write(content)
 
     print("Post created!")
     print(f"Start editing {path}")
