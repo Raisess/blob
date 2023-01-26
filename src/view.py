@@ -14,7 +14,7 @@ class View:
   def content(self) -> str:
     return self.__theme_content.render({
       "TITLE": env.get("TITLE"),
-      "DESCRITPION": env.get("DESCRIPTION"),
+      "DESCRIPTION": env.get("DESCRIPTION"),
       "CONTENT": self._content,
     })
 
