@@ -50,10 +50,9 @@ class ListView(View):
 class PostView(View):
   def __init__(self, path: str):
     super().__init__("post")
-    file = open(path.replace("blog", "inputs"), "r")
-    data = file.read()
-    file.close()
-    self._content = data if path.endswith(".html") else mistune.html(data)
+    with open(path.replace("blog", "inputs"), "r") as file:
+      data = file.read()
+      self._content = data if path.endswith(".html") else mistune.html(data)
 
 
 class ErrorView(View):
