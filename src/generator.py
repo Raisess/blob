@@ -1,6 +1,6 @@
 import os
 
-from view.view import ListView, PostView
+from view import ListView, PostView
 
 class Generator:
   def Generate() -> None:
@@ -9,7 +9,7 @@ class Generator:
 
     view = ListView(False)
     file = open("./blog/index.html", "w")
-    file.write(view.content)
+    file.write(view.content())
     file.close()
 
     posts = os.listdir("./inputs")
@@ -17,5 +17,5 @@ class Generator:
       path = f"./blog/{post}"
       view = PostView(path)
       file = open(path.replace(".md", ".html"), "w")
-      file.write(view.content)
+      file.write(view.content())
       file.close()

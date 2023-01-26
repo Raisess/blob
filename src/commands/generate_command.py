@@ -1,6 +1,6 @@
 from yacli import Command
 
-from view.generator import Generator
+from generator import Generator
 
 class GenerateCommand(Command):
   def __init__(self):

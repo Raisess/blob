@@ -1,7 +1,7 @@
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 
-from view.view import ListView, PostView, ErrorView
+from view import ListView, PostView, ErrorView
 
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
@@ -11,14 +11,14 @@ class RequestHandler(SimpleHTTPRequestHandler):
       self.send_response(200)
       self.send_header("Content-type", "text/html")
       self.end_headers()
-      self.wfile.write(html.content_bytes)
+      self.wfile.write(html.content_bytes())
     except:
       html = ErrorView(404, "Not Found")
 
       self.send_response(404)
       self.send_header("Content-type", "text/html")
       self.end_headers()
-      self.wfile.write(html.content_bytes)
+      self.wfile.write(html.content_bytes())
 
 
 class Server:

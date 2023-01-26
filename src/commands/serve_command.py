@@ -1,6 +1,6 @@
 from yacli import Command
 
-from server.server import Server
+from server import Server
 
 class ServeCommand(Command):
   def __init__(self):

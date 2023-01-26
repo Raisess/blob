@@ -1,32 +1,34 @@
 import mistune
 import os
+import jinja2
 
-from util.env import env
+from env import env
 
 class View:
   def __init__(self):
     theme = env.get("THEME") if env.get("THEME") != None else "default.html"
-    self._content = self._find_html(os.path.abspath(f"/usr/local/etc/blob/themes/{theme}"))
-    self._content = self._content.replace("{{TITLE}}", env.get("TITLE"))
-    self._content = self._content.replace("{{DESCRIPTION}}", env.get("DESCRIPTION"))
+    with open(f"/usr/local/etc/blob/themes/{theme}", "r") as theme_file:
+      self.__theme_content = jinja2.Template(theme_file.read())
+      theme_file.close()
 
-  @property
-  def content(self) -> str:
-    return self._content
-
-  @property
-  def content_bytes(self) -> bytes:
-    return bytes(self.content, "utf8")
-
-  def _find_html(self, path: str) -> str:
-    if not path.endswith(".html") and not path.endswith(".md"):
-      raise Exception("Invalid file format")
-
-    path = path.replace("blog", "inputs")
-    file = open(path, "r")
-    html = file.read() if path.endswith(".html") else mistune.html(file.read())
+  def _load_html(self, path: str) -> str:
+    file = open(path.replace("blog", "inputs"), "r")
+    data = file.read()
     file.close()
-    return html
+    return data if path.endswith(".html") else mistune.html(data)
+
+  def _render(self, data: dict[any]) -> str:
+    return self.__theme_content.render({
+      "TITLE": env.get("TITLE"),
+      "DESCRITPION": env.get("DESCRIPTION"),
+      **data,
+    })
+
+  def content(self) -> str:
+    raise NotImplemented()
+
+  def content_bytes(self) -> bytes:
+    return bytes(self.content(), "utf-8")
 
 
 class ListView(View):
@@ -58,19 +60,31 @@ class ListView(View):
         </div>
       """)
 
-    self._content = self._content.replace("{{CONTENT}}", "<br />".join(posts_tags))
+    self.__content = "<br />".join(posts_tags)
+
+  def content(self) -> str:
+    return self._render({
+      "CONTENT": self.__content,
+    })
 
 
 class PostView(View):
   def __init__(self, path: str):
     super().__init__()
+    self.__content = self._load_html(path)
 
-    html = self._find_html(path)
-    self._content = self._content.replace("{{CONTENT}}", html)
+  def content(self) -> str:
+    return self._render({
+      "CONTENT": self.__content,
+    })
 
 
 class ErrorView(View):
   def __init__(self, code: int, message: str):
     super().__init__()
+    self.__content = f"<h2>Error {code}: {message}</h2>"
 
-    self._content = self._content.replace("{{CONTENT}}", f"<h2>Error {code}: {message}</h2>")
+  def content(self) -> str:
+    return self._render({
+      "CONTENT": self.__content,
+    })
