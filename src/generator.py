@@ -7,15 +7,13 @@ class Generator:
     if not os.path.isdir("./blog"):
       os.mkdir("./blog")
 
-    view = ListView(False)
-    file = open("./blog/index.html", "w")
-    file.write(view.content())
-    file.close()
+    with open("./blog/index.html", "w") as list_file:
+      view = ListView(replace_md_with_html=True)
+      list_file.write(view.content())
 
     posts = os.listdir("./inputs")
     for post in posts:
       path = f"./blog/{post}"
-      view = PostView(path)
-      file = open(path.replace(".md", ".html"), "w")
-      file.write(view.content())
-      file.close()
+      with open(path.replace(".md", ".html"), "w") as post_file:
+        view = PostView(path)
+        post_file.write(view.content())

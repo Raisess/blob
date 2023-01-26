@@ -23,7 +23,7 @@ class View:
 
 
 class ListView(View):
-  def __init__(self, dev = True):
+  def __init__(self, replace_md_with_html = False):
     super().__init__("list")
     self._content = []
 
@@ -31,7 +31,7 @@ class ListView(View):
     post_list.sort()
     post_list.reverse()
     for post in post_list:
-      if not dev:
+      if replace_md_with_html:
         post = post.replace(".md", ".html")
 
       post_data = {}
