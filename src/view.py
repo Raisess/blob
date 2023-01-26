@@ -5,11 +5,11 @@ import jinja2
 from env import env
 
 class View:
-  def __init__(self):
-    theme = env.get("THEME") if env.get("THEME") != None else "default.html"
-    with open(f"/usr/local/etc/blob/themes/{theme}", "r") as theme_file:
+  def __init__(self, is_list: bool = False):
+    theme = env.get("THEME") if env.get("THEME") != None else "default"
+    page = "list.html" if is_list else "post.html"
+    with open(f"/usr/local/etc/blob/themes/{theme}/{page}", "r") as theme_file:
       self.__theme_content = jinja2.Template(theme_file.read())
-      theme_file.close()
 
   def _load_html(self, path: str) -> str:
     file = open(path.replace("blog", "inputs"), "r")
@@ -28,43 +28,38 @@ class View:
     raise NotImplemented()
 
   def content_bytes(self) -> bytes:
+    print(self.content())
     return bytes(self.content(), "utf-8")
 
 
 class ListView(View):
   def __init__(self, dev = True):
-    super().__init__()
+    super().__init__(True)
+    print("HERE")
+    self.__content = []
 
-    posts = os.listdir("./inputs")
-    posts.sort()
-    posts.reverse()
-    posts_tags = ["<h2>Posts</h2>"]
-    for post in posts:
+    post_list = os.listdir("./inputs")
+    post_list.sort()
+    post_list.reverse()
+    for post in post_list:
       if not dev:
         post = post.replace(".md", ".html")
 
+      post_data = {}
+      post_data["link"] = post
+      post_data["name"] = post.split("_")[1].replace("-", " ").replace(".html", "").replace(".md", "")
+
       date = post.split("_")[0]
-      year = date[0:4]
-      month = date[4:6]
-      day = date[6:8]
-
-      page = post.split("_")[1].replace("-", " ").replace(".html", "").replace(".md", "")
-      posts_tags.append(f"""
-        <div>
-          <time style="color: #888888 !important; font-size: 0.9rem !important;">
-            {year}-{month}-{day}
-          </time>
-          <h4>
-            <a href=\"/blog/{post}\">{page}</a>
-          </h4>
-        </div>
-      """)
-
-    self.__content = "<br />".join(posts_tags)
+      post_data["date"] = {
+        "year": date[0:4],
+        "month": date[4:6],
+        "day": date[6:8],
+      }
+      self.__content.append(post_data)
 
   def content(self) -> str:
     return self._render({
-      "CONTENT": self.__content,
+      "posts": self.__content,
     })
 
 
