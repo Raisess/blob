@@ -14,7 +14,7 @@ Installing:
 ```shell
 $ git clone https://github.com/Raisess/blob
 $ cd blob
-$ sudo ./install.py
+$ ./install.py
 $ blob help
 ```
 
