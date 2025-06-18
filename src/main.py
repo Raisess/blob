@@ -8,5 +8,10 @@ from commands.post_command import PostCommand
 from commands.serve_command import ServeCommand
 
 if __name__ == "__main__":
-  cli = CLI("blob", [InitCommand(), PostCommand(), ServeCommand(), GenerateCommand()])
+  cli = CLI("blob", [
+    InitCommand(),
+    PostCommand(),
+    ServeCommand(),
+    GenerateCommand()
+  ])
   cli.handle()

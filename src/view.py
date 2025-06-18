@@ -8,8 +8,12 @@ class View:
   def __init__(self, page: str):
     self._content = None
     theme = env.get("THEME") if env.get("THEME") != None else "default"
-    with open(f"/usr/local/etc/blob/themes/{theme}/{page}.html", "r") as theme_file:
-      self.__theme_content = jinja2.Template(theme_file.read())
+    try:
+      with open(f"./etc/themes/{theme}/{page}.html", "r") as theme_file:
+        self.__theme_content = jinja2.Template(theme_file.read())
+    except FileNotFoundError:
+      with open(f"/usr/local/etc/blob/themes/{theme}/{page}.html", "r") as theme_file:
+        self.__theme_content = jinja2.Template(theme_file.read())
 
   def content(self) -> str:
     return self.__theme_content.render({

@@ -1,3 +1,4 @@
+import atexit
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 
@@ -28,6 +29,8 @@ class Server:
 
   def listen(self) -> None:
     with TCPServer((self.__host, self.__port), RequestHandler) as instance:
+      atexit.register(instance.shutdown)
+
       print(f"Running at http://{self.__host}:{self.__port}/blog")
 
       try:
