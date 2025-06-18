@@ -1,4 +1,6 @@
 import atexit
+import traceback
+
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 
@@ -7,16 +9,36 @@ from view import ListView, PostView, ErrorView
 class RequestHandler(SimpleHTTPRequestHandler):
   def do_GET(self) -> None:
     try:
-      html = ListView() if self.path == "/blog" else PostView(f"./{self.path}")
+      if self.path == "/blog" or self.path.endswith(".html") or self.path.endswith(".md"):
+        html = ListView() if self.path == "/blog" else PostView(f"./{self.path}")
 
-      self.send_response(200)
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(html.content_bytes())
+      else:
+        path = self.path.replace("blog", "inputs")
+        content = bytes()
+        with open(f"./{path}", "rb") as file:
+          content = file.read()
+
+        self.send_response(200)
+        self.send_header("Content-type", "image/png")
+        self.end_headers()
+        self.wfile.write(content)
+    except FileNotFoundError:
+      html = ErrorView(404, "Not Found")
+
+      self.send_response(404)
       self.send_header("Content-type", "text/html")
       self.end_headers()
       self.wfile.write(html.content_bytes())
     except:
-      html = ErrorView(404, "Not Found")
+      trace = traceback.format_exc()
+      print(trace)
+      html = ErrorView(500, trace)
 
-      self.send_response(404)
+      self.send_response(500)
       self.send_header("Content-type", "text/html")
       self.end_headers()
       self.wfile.write(html.content_bytes())
@@ -29,11 +51,15 @@ class Server:
 
   def listen(self) -> None:
     with TCPServer((self.__host, self.__port), RequestHandler) as instance:
-      atexit.register(instance.shutdown)
+      def close() -> None:
+        instance.server_close()
+        instance.shutdown()
+
+      atexit.register(close)
 
       print(f"Running at http://{self.__host}:{self.__port}/blog")
 
       try:
         instance.serve_forever()
       except KeyboardInterrupt:
-        instance.shutdown()
+        close()

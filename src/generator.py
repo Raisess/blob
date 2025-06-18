@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from view import ListView, PostView
 
@@ -11,9 +12,12 @@ class Generator:
       view = ListView(replace_md_with_html=True)
       list_file.write(view.content())
 
-    posts = os.listdir("./inputs")
-    for post in posts:
-      path = f"./blog/{post}"
-      with open(path.replace(".md", ".html"), "w") as post_file:
-        view = PostView(path)
-        post_file.write(view.content())
+    files = os.listdir("./inputs")
+    for file in files:
+      path = f"./blog/{file}"
+      if path.endswith(".html") or path.endswith(".md"):
+        with open(path.replace(".md", ".html"), "w") as f:
+          view = PostView(path)
+          f.write(view.content())
+      else:
+        shutil.copy(f"./inputs/{file}", f"./blog/{file}")

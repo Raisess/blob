@@ -35,20 +35,21 @@ class ListView(View):
     post_list.sort()
     post_list.reverse()
     for post in post_list:
-      if replace_md_with_html:
-        post = post.replace(".md", ".html")
+      if post.endswith(".html") or post.endswith(".md"):
+        if replace_md_with_html:
+          post = post.replace(".md", ".html")
 
-      post_data = {}
-      post_data["link"] = post
-      post_data["name"] = post.split("_")[1].replace("-", " ").replace(".html", "").replace(".md", "")
+        post_data = {}
+        post_data["link"] = post
+        post_data["name"] = post.split("_")[1].replace("-", " ").replace(".html", "").replace(".md", "")
 
-      date = post.split("_")[0]
-      post_data["date"] = {
-        "year": date[0:4],
-        "month": date[4:6],
-        "day": date[6:8],
-      }
-      self._content.append(post_data)
+        date = post.split("_")[0]
+        post_data["date"] = {
+          "year": date[0:4],
+          "month": date[4:6],
+          "day": date[6:8],
+        }
+        self._content.append(post_data)
 
 
 class PostView(View):
